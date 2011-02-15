@@ -50,7 +50,7 @@ This includes the Maxmind jsapi and the javascript file used to find leverage th
         config="widgets/Geolocation/GeolocationWidget.xml"
         url="widgets/Geolocation/GeolocationWidget.swf"/>
 8. Add the Geolocation widget as a Flex Module to the Flex Viewer project.  In Flash Builder, right click on the FlexViewer project and select "Properties"  Select "Flex Modules", then Add, and navigate to GeolocationWidget.mxml.
-
+9. Build the Viewer.
 
 ### Code and Libraries Included in the Archive ###
 The following SWCs are included in the libs dir:
