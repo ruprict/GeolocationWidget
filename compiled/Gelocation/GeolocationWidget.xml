@@ -1,0 +1,10 @@
+<configuration>
+	<!-- This is the image that will mark the current location -->
+    <pushPinImageURL>assets/images/down.png</pushPinImageURL>
+    <!-- This FEATURE servcie will be queried for a containing POLYGON -->
+    <featureServerURL>http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/3</featureServerURL>
+    <!-- If a polygon is found, this text will be displayed in the dialog.  The $[ATTRIBUTE] syntax will be replaced with attribue values -->
+    <!-- from the found feature. -->
+    <featureFoundTemplate>You are in $[NAME] county. </featureFoundTemplate>
+
+</configuration>

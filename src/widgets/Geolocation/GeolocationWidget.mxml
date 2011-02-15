@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     ////////////////////////////////////////////////////////////////////////////////
+     //
+     // Copyright (c) 2010 ESRI
+     //
+     // All rights reserved under the copyright laws of the United States.
+     // You may freely redistribute and use this software, with or
+     // without modification, provided you include the original copyright
+     // and use restrictions.  See use restrictions in the file:
+     // <install location>/License.txt
+     //
+     ////////////////////////////////////////////////////////////////////////////////
+-->
+<viewer:BaseWidget xmlns:fx="http://ns.adobe.com/mxml/2009"
+                   xmlns:s="library://ns.adobe.com/flex/spark"
+                   xmlns:mx="library://ns.adobe.com/flex/mx"
+                   xmlns:esri="http://www.esri.com/2008/ags"
+                   xmlns:viewer="com.esri.viewer.*"   
+                   widgetConfigLoaded="init()">
+	
+	<viewer:states>
+		<s:State name="searchingForLocation"/>
+		<s:State name="locationFound"/>
+		<s:State name="locationNotFound"/>
+	</viewer:states>
+	
+	<viewer:transitions>
+		<s:Transition autoReverse="true" toState="*">
+			<s:Fade targets="{[info, loc_x,loc_y]}"/>
+		</s:Transition>
+	</viewer:transitions>
+    <fx:Script>
+        <![CDATA[
+			import mx.controls.Alert;
+			
+			import org.robotlegs.core.IInjector;
+			import org.swiftsuspenders.Injector;
+			
+			import widgets.Geolocation.events.GeolocationWidgetEvent;
+			
+			 
+			public var context:GeolocationWidgetContext;
+			
+			public static const STATE_LOCATION_FOUND:String = "locationFound";
+			public static const STATE_LOCATION_NOT_FOUND:String = "locationNotFound";
+			public static const STATE_SEARCHING_FOR_LOCATION:String = "searchingForLocation";
+			
+			[Inject]
+			public function set parentInjector(value:IInjector):void{
+				context = new GeolocationWidgetContext(this,value);
+			}
+			
+		
+            //this function called when the widget's configuration is loaded
+            private function init():void
+            {
+
+				
+                if (configXML) // checking for valid content in the configuration file
+                {
+                    //lbl.text = configXML.content || getDefaultString("helloContent");
+					
+                }
+            }
+	
+			
+			private function widgetClosedHandler(event:Event):void
+			{	
+				dispatchEvent(new GeolocationWidgetEvent(GeolocationWidgetEvent.CLOSED));
+			}
+			private function widgetOpenedHandler(event:Event):void
+			{
+				dispatchEvent(new GeolocationWidgetEvent(GeolocationWidgetEvent.OPEN));
+			}
+
+        ]]>
+    </fx:Script>
+    <viewer:WidgetTemplate id			="wTemplate" 
+						   closed		="widgetClosedHandler(event)"
+						   open			="widgetOpenedHandler(event)"
+                           width		="300" 
+						   height		="150">
+        <viewer:layout>
+            <s:VerticalLayout horizontalAlign="left" verticalAlign="middle"/>
+        </viewer:layout>
+		<s:Label id="info" text.searchingForLocation="Finding location.." text.locationFound="Location Found" text.locationNotFound="Location NOT found."/>
+		<mx:HBox visible.locationNotFound="false" visible.searchingForLocation="false" visible.locationFound="true">
+			<s:Label text="X: "/>
+	        <s:Label id="loc_x"    />
+			<s:Label text="Y: "/>
+			<s:Label id="loc_y"	 />
+		</mx:HBox>
+		<s:Button id="btnGoThere" label="Go There" />
+		<s:Label id="polygonInformationLabel" visible.locationFound="true" visible.locationNotFound="false" visible.searchingForLocation="false" />
+				 
+    </viewer:WidgetTemplate>
+</viewer:BaseWidget>
